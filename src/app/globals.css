@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --brand-red: #B3121B;
+    --brand-darkred: #8E0F0F;
+    --brand-yellow: #FFC62B;
+    --brand-yellow-light: #FFE27D;
+    --brand-cream: #FAF3E3;
+    --brand-cream-light: #FFFBF3;
+    --brand-brown: #4A2A17;
+    --brand-brown-dark: #2F170A;
+  }
+
+  body {
+    background-color: var(--brand-cream);
+    color: var(--brand-brown);
+    font-family: var(--font-poppins), system-ui, -apple-system, sans-serif;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-fredoka), system-ui, sans-serif;
+  }
+
+  .font-script {
+    font-family: var(--font-caveat), cursive, sans-serif;
+  }
+}
+
+/* Custom food badges, starburst, and animations */
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(2deg);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 198, 43, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(255, 198, 43, 0.7);
+  }
+}
+
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-float {
+  animation: floatSlow 4s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: floatSlow 5s ease-in-out 1.5s infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2.5s infinite;
+}
+
+/* Starburst badge for promo "Harga Star 10K" */
+.starburst-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #B3121B;
+  color: #FFC62B;
+  font-family: var(--font-fredoka), sans-serif;
+  font-weight: 800;
+  clip-path: polygon(
+    50% 0%, 63% 18%, 82% 10%, 82% 31%, 100% 38%, 91% 57%, 100% 74%, 81% 79%,
+    79% 100%, 60% 90%, 47% 100%, 36% 87%, 18% 94%, 19% 73%, 0% 66%, 10% 48%,
+    0% 32%, 18% 27%, 19% 7%, 37% 14%
+  );
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF3E3;
+}
+::-webkit-scrollbar-thumb {
+  background: #D8BD97;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B3121B;
+}
