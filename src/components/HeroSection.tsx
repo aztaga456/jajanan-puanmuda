@@ -52,29 +52,31 @@ export const HeroSection: React.FC = () => {
   return (
     <section
       id="hero"
-      className="relative pt-32 pb-20 sm:pt-40 sm:pb-28 overflow-hidden"
+      className="relative pt-32 pb-20 sm:pt-40 sm:pb-28"
       style={{
         background:
           "linear-gradient(110deg, #360508 0%, #54080D 30%, #7A0D13 65%, #9E1018 100%)",
       }}
     >
-      {/* Background Lighting & Depth */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-amber-400/15 via-transparent to-black/30 pointer-events-none" />
-      <div className="absolute -top-32 -left-32 w-96 h-96 bg-red-950/60 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-3xl pointer-events-none" />
+      {/* Background Lighting & Depth (Overflow isolated to prevent page scroll while allowing floating bar overlap) */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-amber-400/15 via-transparent to-black/30 pointer-events-none" />
+        <div className="absolute -top-32 -left-32 w-96 h-96 bg-red-950/60 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Floating Sparkles & Leaves matching reference */}
-      <div className="absolute top-36 left-10 text-[#FFC62B] text-2xl font-bold animate-pulse pointer-events-none select-none">
-        ✦
-      </div>
-      <div className="absolute bottom-40 left-1/4 text-amber-200 text-lg font-bold animate-float-delayed pointer-events-none select-none">
-        ★
-      </div>
-      <div className="absolute top-48 right-1/3 text-[#FFC62B] text-3xl font-bold animate-float pointer-events-none select-none">
-        ✦
-      </div>
-      <div className="absolute top-1/4 right-10 text-[#FFC62B] text-xl font-bold animate-pulse pointer-events-none select-none">
-        ★
+        {/* Floating Sparkles & Leaves matching reference */}
+        <div className="absolute top-36 left-10 text-[#FFC62B] text-2xl font-bold animate-pulse pointer-events-none select-none">
+          ✦
+        </div>
+        <div className="absolute bottom-40 left-1/4 text-amber-200 text-lg font-bold animate-float-delayed pointer-events-none select-none">
+          ★
+        </div>
+        <div className="absolute top-48 right-1/3 text-[#FFC62B] text-3xl font-bold animate-float pointer-events-none select-none">
+          ✦
+        </div>
+        <div className="absolute top-1/4 right-10 text-[#FFC62B] text-xl font-bold animate-pulse pointer-events-none select-none">
+          ★
+        </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -163,7 +165,7 @@ export const HeroSection: React.FC = () => {
       </div>
 
       {/* Floating Quick Features Bar (Overlapping Bottom) */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-16 -mb-28 sm:-mb-32 relative z-20">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 sm:mt-16 -mb-20 sm:-mb-24 md:-mb-28 relative z-20">
         <div className="bg-white rounded-3xl sm:rounded-full p-4 sm:p-5 shadow-[0_20px_50px_rgba(0,0,0,0.18)] border border-[#EEDFCA] flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6">
           {/* Feature 1: Fast Delivery */}
           <div className="flex items-center gap-3.5 w-full md:w-auto px-3">

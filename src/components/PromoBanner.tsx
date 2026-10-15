@@ -9,7 +9,7 @@ export const PromoBanner: React.FC = () => {
   const { siteContent } = useApp();
 
   return (
-    <section id="promo" className="pt-36 sm:pt-44 pb-16 bg-[#FAF3E3]">
+    <section id="promo" className="pt-28 sm:pt-36 md:pt-44 pb-16 bg-[#FAF3E3]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Large Rounded Crimson Card */}
         <div className="relative rounded-3xl bg-gradient-to-r from-[#9A0F16] via-[#B3121B] to-[#C41520] text-white p-8 sm:p-12 lg:p-14 overflow-hidden shadow-[0_20px_50px_rgba(179,18,27,0.3)] border-2 border-red-800/40">
