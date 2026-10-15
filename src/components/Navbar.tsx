@@ -5,7 +5,7 @@ import Link from "next/link";
 import { BrandLogo } from "./BrandLogo";
 import { useCart } from "@/context/CartContext";
 import { useApp } from "@/context/AppContext";
-import { ShoppingBag, Menu as MenuIcon, X, PhoneCall, Settings } from "lucide-react";
+import { ShoppingBag, Menu as MenuIcon, X, Settings } from "lucide-react";
 
 export const Navbar: React.FC = () => {
   const { totalItems, setIsCartOpen } = useCart();
@@ -81,16 +81,7 @@ export const Navbar: React.FC = () => {
             )}
           </button>
 
-          {/* Yellow Pill Button "Pesan Sekarang" */}
-          <a
-            href={`https://wa.me/${siteContent.businessPhoneRaw || "6281928034054"}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 sm:gap-2 bg-[#FFC62B] hover:bg-[#FFD452] text-[#4A2A17] font-display font-black text-xs sm:text-sm px-4 sm:px-5 py-2 sm:py-2.5 rounded-full shadow-[0_4px_16px_rgba(255,198,43,0.4)] hover:shadow-[0_6px_22px_rgba(255,198,43,0.6)] transition-all hover:scale-105 active:scale-95 border border-yellow-300 shrink-0"
-          >
-            <PhoneCall className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#B3121B]" />
-            <span className="whitespace-nowrap">Pesan Sekarang</span>
-          </a>
+
 
           {/* Mobile Menu Hamburger */}
           <button

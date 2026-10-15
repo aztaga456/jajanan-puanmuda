@@ -146,7 +146,7 @@ export default function AdminPage() {
   // Auth Handler
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (pinInput === "1234" || pinInput === "admin123" || pinInput === "puanmuda") {
+    if (pinInput.trim().toLowerCase() === "kekinian") {
       setIsAuthenticated(true);
       setAuthError(false);
     } else {
@@ -201,11 +201,11 @@ export default function AdminPage() {
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <label className="block text-xs font-bold text-[#4A2A17] text-left mb-1">
-                PIN / Password Akses
+                Password Akses Admin
               </label>
               <input
                 type="password"
-                placeholder="Masukkan PIN (Default: 1234)"
+                placeholder="Masukkan password admin"
                 value={pinInput}
                 onChange={(e) => setPinInput(e.target.value)}
                 className="w-full text-center tracking-widest text-lg font-bold px-4 py-3 rounded-xl border border-amber-300 focus:outline-none focus:ring-2 focus:ring-[#B3121B]"
@@ -213,7 +213,7 @@ export default function AdminPage() {
               />
               {authError && (
                 <p className="text-xs text-red-600 font-bold mt-1 text-left">
-                  PIN salah. Coba gunakan: 1234 atau admin123
+                  Password salah. Silakan coba lagi.
                 </p>
               )}
             </div>
@@ -226,19 +226,10 @@ export default function AdminPage() {
             </button>
           </form>
 
-          <div className="mt-6 pt-4 border-t border-amber-100 flex items-center justify-between text-xs text-gray-500">
+          <div className="mt-6 pt-4 border-t border-amber-100 flex items-center justify-center text-xs text-gray-500">
             <Link href="/" className="hover:text-[#B3121B] flex items-center gap-1 font-semibold">
               <ArrowLeft className="w-3.5 h-3.5" /> Kembali ke Web
             </Link>
-            <button
-              onClick={() => {
-                setPinInput("1234");
-                setIsAuthenticated(true);
-              }}
-              className="text-xs text-amber-700 underline font-semibold"
-            >
-              Login Cepat (Auto-Fill)
-            </button>
           </div>
         </div>
       </div>
