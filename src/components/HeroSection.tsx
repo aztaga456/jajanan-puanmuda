@@ -225,6 +225,15 @@ export const HeroSection: React.FC = () => {
           </a>
         </div>
       </div>
+
+      {/* Smooth Bottom Ombre Gradient Transition to Section Below */}
+      <div
+        className="absolute -bottom-1 left-0 right-0 h-48 sm:h-64 pointer-events-none z-10"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(54, 5, 8, 0) 0%, rgba(54, 5, 8, 0.4) 30%, rgba(138, 17, 24, 0.35) 60%, rgba(250, 243, 227, 0.75) 85%, #FAF3E3 100%)",
+        }}
+      />
     </section>
   );
 };

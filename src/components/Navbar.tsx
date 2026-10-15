@@ -22,10 +22,7 @@ export const Navbar: React.FC = () => {
   }, []);
 
   const navLinks = [
-    { name: "Beranda", href: "#hero" },
     { name: "Menu Favorit", href: "#menu" },
-    { name: "Promo 10K", href: "#promo" },
-    { name: "Aneka Risol", href: "#risol-showcase" },
     { name: "Pre-Order Acara", href: "#preorder" },
     { name: "Cara Pesan", href: "#cara-pesan" },
     { name: "Kontak & Lokasi", href: "#lokasi" },
