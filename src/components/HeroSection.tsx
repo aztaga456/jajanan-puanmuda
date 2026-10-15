@@ -50,15 +50,22 @@ export const HeroSection: React.FC = () => {
             </div>
 
             {/* Main Headline */}
-            <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[4rem] font-black text-white leading-[1.08] tracking-tight drop-shadow-md">
-              {siteContent.heroTitleLine1} <br className="hidden sm:inline" />
-              <span className="text-white">{siteContent.heroTitleLine2}</span>
+            <h1 className="leading-[1.05] tracking-tight drop-shadow-md">
+              <span className="font-script italic font-bold text-[#FFC62B] text-5xl sm:text-6xl md:text-7xl lg:text-[5rem] block -rotate-1 drop-shadow-sm leading-none">
+                {siteContent.heroTitleLine1}
+              </span>
+              <span className="font-display font-black text-white text-4xl sm:text-5xl md:text-6xl lg:text-[4.2rem] block tracking-tight mt-1">
+                {siteContent.heroTitleLine2}
+              </span>
             </h1>
 
-            {/* Script Tagline Accent */}
-            <div className="mt-3 mb-8">
-              <span className="font-script text-3xl sm:text-4xl lg:text-5xl text-[#FFC62B] font-bold tracking-wide drop-shadow-sm block -rotate-1">
+            {/* Tagline Accent matching brand identity */}
+            <div className="mt-4 mb-8 flex items-center gap-2.5 flex-wrap">
+              <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-[#FFC62B] text-[#4A2A17] font-display font-black text-xs sm:text-sm uppercase tracking-wider shadow-md">
                 {siteContent.heroTagline}
+              </span>
+              <span className="font-script text-2xl sm:text-3xl text-amber-200 font-bold -rotate-2 drop-shadow-sm">
+                Bikin Nagih!
               </span>
             </div>
 
