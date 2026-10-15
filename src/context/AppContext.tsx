@@ -90,9 +90,8 @@ const DEFAULT_SITE_CONTENT: SiteContent = {
   heroTitleLine1: "Jajanan",
   heroTitleLine2: "Puan Muda",
   heroTagline: "Cemilan Kekinian",
-  heroSubtitle: "Cobain sekarang, dijamin ketagihan!",
-  heroDesc:
-    "Pilihan lengkap aneka Dimsum Mentai lumer, Risol aneka rasa renyah, Mie Jebew pedas gurih, dan Es Teler segar. Dibuat fresh setiap hari dengan bahan berkualitas tinggi di Suela, Lombok Timur.",
+  heroSubtitle: "",
+  heroDesc: "",
   heroImage: "/images/hero-food-cutout.png",
   promoBadge: "PENAWARAN SPESIAL BULAN INI",
   promoTitle: "Dimsum Gurih",
@@ -240,7 +239,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   useEffect(() => {
     try {
       const savedContent = localStorage.getItem("puanmuda_site_content");
-      if (savedContent) setSiteContent(JSON.parse(savedContent));
+      if (savedContent) {
+        const parsed = JSON.parse(savedContent);
+        if (parsed.heroSubtitle === "Cobain sekarang, dijamin ketagihan!") parsed.heroSubtitle = "";
+        if (parsed.heroDesc && parsed.heroDesc.includes("Pilihan lengkap aneka Dimsum")) parsed.heroDesc = "";
+        setSiteContent(parsed);
+      }
 
       const savedMenu = localStorage.getItem("puanmuda_menu_items");
       if (savedMenu) setMenuItems(JSON.parse(savedMenu));

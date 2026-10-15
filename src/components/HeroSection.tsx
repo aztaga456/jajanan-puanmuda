@@ -56,19 +56,11 @@ export const HeroSection: React.FC = () => {
             </h1>
 
             {/* Script Tagline Accent */}
-            <div className="mt-2.5 mb-4">
+            <div className="mt-3 mb-8">
               <span className="font-script text-3xl sm:text-4xl lg:text-5xl text-[#FFC62B] font-bold tracking-wide drop-shadow-sm block -rotate-1">
                 {siteContent.heroTagline}
               </span>
-              <span className="text-white/95 text-base sm:text-lg font-medium italic mt-1 block">
-                {siteContent.heroSubtitle}
-              </span>
             </div>
-
-            {/* Subtitle Description */}
-            <p className="text-white/80 text-sm sm:text-base max-w-xl leading-relaxed mb-8">
-              {siteContent.heroDesc}
-            </p>
 
             {/* Action Buttons (Yellow Pill + WhatsApp Order Now Pill) */}
             <div className="flex flex-wrap items-center gap-3.5 w-full sm:w-auto">
