@@ -8,6 +8,47 @@ import { useApp } from "@/context/AppContext";
 export const HeroSection: React.FC = () => {
   const { siteContent } = useApp();
 
+  const renderFoodPlatter = () => (
+    <div className="relative w-full max-w-[480px] lg:max-w-[560px] mx-auto animate-float group">
+      {/* Subtle Warm Amber Glow Behind Foods */}
+      <div className="absolute inset-0 m-auto w-[240px] h-[240px] sm:w-[400px] sm:h-[400px] rounded-full bg-gradient-to-tr from-amber-400/20 via-red-500/10 to-transparent blur-3xl pointer-events-none" />
+
+      {/* Seamless Cutout Presentation (No Box / No Border Frame) */}
+      <div className="relative w-full aspect-[16/10] sm:aspect-[16/9]">
+        <Image
+          src={siteContent.heroImage || "/images/hero-food-cutout.png"}
+          alt="Jajanan Puanmuda Cemilan Kekinian Platter"
+          fill
+          priority
+          className="object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.65)] hover:scale-105 transition-transform duration-500"
+        />
+      </div>
+
+      {/* Floating Starburst Badge "Harga Star 10K" */}
+      <div className="absolute -top-3 -right-2 sm:top-2 sm:right-4 z-20 animate-float-delayed">
+        <div className="starburst-badge w-20 h-20 sm:w-24 sm:h-24 shadow-2xl flex flex-col items-center justify-center p-2 text-center transform rotate-12 hover:rotate-0 transition-transform cursor-pointer">
+          <span className="text-[10px] font-bold text-white uppercase tracking-tighter">
+            Harga Star
+          </span>
+          <span className="text-xl sm:text-2xl font-black text-[#FFC62B] leading-none drop-shadow-md">
+            10K
+          </span>
+          <span className="text-[8px] sm:text-[9px] text-amber-100 font-semibold">
+            Dimsum
+          </span>
+        </div>
+      </div>
+
+      {/* Floating Leaf SVGs */}
+      <div className="absolute -left-2 bottom-8 text-emerald-400 drop-shadow-md pointer-events-none select-none text-2xl animate-pulse">
+        🍃
+      </div>
+      <div className="absolute right-6 bottom-4 text-emerald-400 drop-shadow-md pointer-events-none select-none text-xl animate-float">
+        🌿
+      </div>
+    </div>
+  );
+
   return (
     <section
       id="hero"
@@ -60,13 +101,18 @@ export const HeroSection: React.FC = () => {
             </h1>
 
             {/* Tagline Accent matching brand identity */}
-            <div className="mt-4 mb-8 flex items-center gap-2.5 flex-wrap">
+            <div className="mt-4 mb-4 sm:mb-8 flex items-center gap-2.5 flex-wrap">
               <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-[#FFC62B] text-[#4A2A17] font-display font-black text-xs sm:text-sm uppercase tracking-wider shadow-md">
                 {siteContent.heroTagline}
               </span>
               <span className="font-script text-2xl sm:text-3xl text-amber-200 font-bold -rotate-2 drop-shadow-sm">
                 Bikin Nagih!
               </span>
+            </div>
+
+            {/* Mobile-Only Hero Food Cutout (Renders ABOVE action buttons on mobile screens) */}
+            <div className="block lg:hidden w-full my-5 py-1">
+              {renderFoodPlatter()}
             </div>
 
             {/* Action Buttons (Yellow Pill + WhatsApp Order Now Pill) */}
@@ -109,46 +155,9 @@ export const HeroSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column: NO BOX / NO CIRCULAR FRAME, Clean Seamless Food Cutout */}
-          <div className="lg:col-span-6 relative flex items-center justify-center pt-4 lg:pt-0">
-            {/* Subtle Warm Amber Glow Behind Foods */}
-            <div className="absolute w-[300px] h-[300px] sm:w-[450px] sm:h-[450px] rounded-full bg-gradient-to-tr from-amber-400/20 via-red-500/10 to-transparent blur-3xl pointer-events-none" />
-
-            {/* Seamless Cutout Presentation (No Box / No Border Frame) */}
-            <div className="relative w-full max-w-[560px] animate-float group">
-              <div className="relative w-full aspect-[16/10] sm:aspect-[16/9]">
-                <Image
-                  src={siteContent.heroImage || "/images/hero-food-cutout.png"}
-                  alt="Jajanan Puanmuda Cemilan Kekinian Platter"
-                  fill
-                  priority
-                  className="object-contain drop-shadow-[0_25px_35px_rgba(0,0,0,0.65)] hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-
-              {/* Floating Starburst Badge "Harga Star 10K" */}
-              <div className="absolute -top-3 -right-2 sm:top-2 sm:right-4 z-20 animate-float-delayed">
-                <div className="starburst-badge w-20 h-20 sm:w-24 sm:h-24 shadow-2xl flex flex-col items-center justify-center p-2 text-center transform rotate-12 hover:rotate-0 transition-transform cursor-pointer">
-                  <span className="text-[10px] font-bold text-white uppercase tracking-tighter">
-                    Harga Star
-                  </span>
-                  <span className="text-xl sm:text-2xl font-black text-[#FFC62B] leading-none drop-shadow-md">
-                    10K
-                  </span>
-                  <span className="text-[8px] sm:text-[9px] text-amber-100 font-semibold">
-                    Dimsum
-                  </span>
-                </div>
-              </div>
-
-              {/* Floating Leaf SVGs */}
-              <div className="absolute -left-2 bottom-8 text-emerald-400 drop-shadow-md pointer-events-none select-none text-2xl animate-pulse">
-                🍃
-              </div>
-              <div className="absolute right-6 bottom-4 text-emerald-400 drop-shadow-md pointer-events-none select-none text-xl animate-float">
-                🌿
-              </div>
-            </div>
+          {/* Right Column: Desktop Only Food Cutout (Centered side-by-side on desktop) */}
+          <div className="hidden lg:flex lg:col-span-6 relative items-center justify-center pt-4 lg:pt-0">
+            {renderFoodPlatter()}
           </div>
         </div>
       </div>
