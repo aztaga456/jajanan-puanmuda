@@ -1,11 +1,14 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { BrandLogo } from "./BrandLogo";
-import { BUSINESS_INFO } from "@/data/menuData";
-import { Phone, MapPin, Clock, Heart, ArrowUp } from "lucide-react";
+import { useApp } from "@/context/AppContext";
+import { Phone, MapPin, Clock, Heart, ArrowUp, Lock } from "lucide-react";
 
 export const Footer: React.FC = () => {
+  const { siteContent } = useApp();
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -21,15 +24,15 @@ export const Footer: React.FC = () => {
           <div className="lg:col-span-5 flex flex-col items-start">
             <BrandLogo variant="horizontal" theme="light" className="mb-4" />
             <p className="font-script text-2xl text-[#FFC62B] font-bold mb-3">
-              Cemilan Kekinian — Cobain sekarang, dijamin ketagihan!
+              {siteContent.businessTagline}
             </p>
             <p className="text-white/80 text-xs sm:text-sm leading-relaxed mb-6 max-w-sm">
-              Etalase kuliner resmi Jajanan Puanmuda di Suela, Lombok Timur. Menyajikan aneka Dimsum Mentai, Risol Gurih, Mie Jebew, dan Paket Katering Arisan berstandar higienis dan halal.
+              Etalase kuliner resmi {siteContent.businessName} di Suela, Lombok Timur. Menyajikan aneka Dimsum Mentai, Risol Gurih, Mie Jebew, dan Paket Katering Arisan berstandar higienis dan halal.
             </p>
 
             <div className="flex items-center gap-3">
               <a
-                href={BUSINESS_INFO.whatsappUrl}
+                href={`https://wa.me/${siteContent.businessPhoneRaw || "6281928034054"}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#25D366] text-white flex items-center justify-center transition-colors shadow-sm"
@@ -83,9 +86,13 @@ export const Footer: React.FC = () => {
                 </a>
               </li>
               <li>
-                <a href="#cara-pesan" className="hover:text-[#FFC62B] transition-colors">
-                  Cara Pemesanan WhatsApp
-                </a>
+                <Link
+                  href="/admin"
+                  className="hover:text-[#FFC62B] transition-colors flex items-center gap-1.5 text-amber-300 font-bold"
+                >
+                  <Lock className="w-3.5 h-3.5" />
+                  <span>Panel Admin (Kelola Web)</span>
+                </Link>
               </li>
             </ul>
           </div>
@@ -99,19 +106,19 @@ export const Footer: React.FC = () => {
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#FFC62B] shrink-0 mt-0.5" />
                 <span>
-                  <strong>Outlet:</strong> {BUSINESS_INFO.address}
+                  <strong>Outlet:</strong> {siteContent.businessAddress}
                 </span>
               </div>
               <div className="flex items-start gap-2.5">
                 <Clock className="w-4 h-4 text-[#FFC62B] shrink-0 mt-0.5" />
                 <span>
-                  <strong>Jam Buka:</strong> {BUSINESS_INFO.hours}
+                  <strong>Jam Buka:</strong> {siteContent.businessHours}
                 </span>
               </div>
               <div className="flex items-start gap-2.5">
                 <Phone className="w-4 h-4 text-[#FFC62B] shrink-0 mt-0.5" />
                 <span>
-                  <strong>WhatsApp Bisnis:</strong> {BUSINESS_INFO.phone}
+                  <strong>WhatsApp Bisnis:</strong> {siteContent.businessPhone}
                 </span>
               </div>
             </div>
@@ -129,7 +136,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/70">
-          <p>© 2026 Jajanan Puanmuda. Seluruh hak cipta dilindungi undang-undang.</p>
+          <p>© 2026 {siteContent.businessName}. Seluruh hak cipta dilindungi undang-undang.</p>
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1 text-amber-200">
               Dibuat dengan <Heart className="w-3.5 h-3.5 text-[#FFC62B] fill-current" /> untuk pecinta kuliner

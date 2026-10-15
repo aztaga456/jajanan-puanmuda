@@ -1,10 +1,12 @@
 "use client";
 
 import React from "react";
-import { MapPin, Clock, Phone, Navigation, ShieldCheck, CheckCircle2 } from "lucide-react";
-import { BUSINESS_INFO, DELIVERY_ZONES } from "@/data/menuData";
+import { MapPin, Clock, Phone, Navigation, CheckCircle2 } from "lucide-react";
+import { useApp } from "@/context/AppContext";
 
 export const LocationSection: React.FC = () => {
+  const { siteContent, deliveryZones } = useApp();
+
   return (
     <section id="lokasi" className="py-20 sm:py-28 bg-[#FAF3E3] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -31,10 +33,10 @@ export const LocationSection: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="font-display text-2xl font-black text-[#4A2A17]">
-                    Outlet Jajanan Puanmuda
+                    Outlet {siteContent.businessName}
                   </h3>
                   <p className="text-xs text-gray-500 font-medium">
-                    Suela, Lombok Timur, NTB
+                    {siteContent.businessAddress}
                   </p>
                 </div>
               </div>
@@ -47,7 +49,7 @@ export const LocationSection: React.FC = () => {
                       Jam Operasional
                     </h4>
                     <p className="text-sm font-display font-bold text-[#4A2A17]">
-                      {BUSINESS_INFO.hours}
+                      {siteContent.businessHours}
                     </p>
                     <span className="text-[11px] text-emerald-700 font-bold">
                       ● Buka Setiap Hari (Melayani Dine-in, Takeaway & Delivery)
@@ -62,7 +64,7 @@ export const LocationSection: React.FC = () => {
                       Pemesanan WhatsApp
                     </h4>
                     <p className="text-sm font-display font-bold text-[#4A2A17]">
-                      {BUSINESS_INFO.phone}
+                      {siteContent.businessPhone}
                     </p>
                     <span className="text-[11px] text-gray-600">
                       Respon cepat & ramah untuk tanya menu atau katering
@@ -88,7 +90,7 @@ export const LocationSection: React.FC = () => {
             </div>
 
             <a
-              href={BUSINESS_INFO.whatsappUrl}
+              href={`https://wa.me/${siteContent.businessPhoneRaw || "6281928034054"}`}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full flex items-center justify-center gap-2 py-3.5 rounded-full bg-[#FFC62B] hover:bg-[#FFD452] text-[#4A2A17] font-display font-black text-sm shadow-md transition-all hover:scale-102"
@@ -116,7 +118,7 @@ export const LocationSection: React.FC = () => {
               </div>
 
               <div className="space-y-3 mb-6">
-                {DELIVERY_ZONES.filter((z) => z.id !== "pickup").map((zone) => (
+                {deliveryZones.filter((z) => z.id !== "pickup").map((zone) => (
                   <div
                     key={zone.id}
                     className="p-4 rounded-2xl bg-[#FAF3E3] border border-amber-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2"

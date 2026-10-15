@@ -3,10 +3,11 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Calendar, Clock, Users, Gift, CheckCircle, Send, PhoneCall } from "lucide-react";
-import { BUSINESS_INFO } from "@/data/menuData";
+import { useApp } from "@/context/AppContext";
 
 export const PreOrderSection: React.FC = () => {
-  const [selectedPackage, setSelectedPackage] = useState("snack-box-hemat");
+  const { eventPackages, siteContent, addOrder } = useApp();
+  const [selectedPackage, setSelectedPackage] = useState(eventPackages[0]?.id || "snack-box-hemat");
   const [quantity, setQuantity] = useState(10);
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -14,41 +15,24 @@ export const PreOrderSection: React.FC = () => {
   const [address, setAddress] = useState("");
   const [notes, setNotes] = useState("");
 
-  const packages = [
-    {
-      id: "snack-box-hemat",
-      name: "Snack Box Hemat (Isi 3)",
-      price: 35000,
-      minOrder: 5,
-      items: ["1x Risol Mayo Creamy", "1x Risol Ayam Suwir Gurih", "1x Dimsum Original Kukus", "Box Cantik & Tisu"],
-      suitableFor: "Rapat Kantor, Seminar, Pengajian, Study Tour",
-      image: "/images/842902220_122222434478590268_5969896741731148261_n.jpg",
-    },
-    {
-      id: "paket-arisan-10org",
-      name: "Paket Arisan Meriah (10 Orang)",
-      price: 275000,
-      minOrder: 1,
-      items: ["5 Porsi Dimsum Mentai Bakar", "10 Risol Campur Aneka Rasa", "10 Cup Es Teler Segar Spesial", "Saus Cocol & Kemasan"],
-      suitableFor: "Arisan Keluarga, Ulang Tahun, Kumpul Bestie",
-      image: "/images/662279887_122199867620590268_6738119228535683969_n.jpg",
-    },
-    {
-      id: "hampers-spesial",
-      name: "Hampers Eksklusif Dimsum & Risol",
-      price: 150000,
-      minOrder: 1,
-      items: ["16 Pcs Dimsum Mentai & Bakar", "8 Pcs Risol Bolognase & Mayo", "2 Botol Saus Sambal & Mentai Khas", "Pita & Greeting Card"],
-      suitableFor: "Hantaran, Hadiah Sahabat, Syukuran",
-      image: "/images/834420764_122221420862590268_1386869829820128574_n.jpg",
-    },
-  ];
-
-  const currentPkg = packages.find((p) => p.id === selectedPackage) || packages[0];
-  const totalPrice = currentPkg.price * quantity;
+  const currentPkg = eventPackages.find((p) => p.id === selectedPackage) || eventPackages[0];
+  const totalPrice = (currentPkg?.price || 0) * quantity;
 
   const handlePreOrderSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!currentPkg) return;
+
+    addOrder({
+      customerName: name || "Pemesan Pre-Order",
+      customerPhone: "-",
+      orderMethod: address ? "antar" : "ambil",
+      deliveryAddress: address,
+      items: [{ name: currentPkg.name, quantity, price: currentPkg.price, note: `Tgl: ${date} ${time}. ${notes}` }],
+      subtotal: totalPrice,
+      deliveryFee: 0,
+      total: totalPrice,
+      type: "preorder",
+    });
 
     let text = `*PRE-ORDER ACARA & KATERING*\n`;
     text += `Jajanan Puanmuda — Suela\n`;
@@ -64,7 +48,7 @@ export const PreOrderSection: React.FC = () => {
     if (notes) text += `Catatan Khusus: ${notes}\n`;
     text += `\nMohon dicek ketersediaan slot tanggal ini ya kak. Terima kasih!`;
 
-    const url = `https://wa.me/${BUSINESS_INFO.phoneRaw}?text=${encodeURIComponent(text)}`;
+    const url = `https://wa.me/${siteContent.businessPhoneRaw || "6281928034054"}?text=${encodeURIComponent(text)}`;
     window.open(url, "_blank");
   };
 
@@ -91,7 +75,7 @@ export const PreOrderSection: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Package Selection Cards */}
           <div className="lg:col-span-7 flex flex-col gap-5">
-            {packages.map((pkg) => {
+            {eventPackages.map((pkg) => {
               const isSelected = selectedPackage === pkg.id;
               return (
                 <div

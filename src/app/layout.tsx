@@ -51,6 +51,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { ClientProviders } from "@/components/ClientProviders";
+
 export default function RootLayout({
   children,
 }: {
@@ -62,7 +64,7 @@ export default function RootLayout({
       className={`${fredoka.variable} ${poppins.variable} ${caveat.variable} scroll-smooth`}
     >
       <body className="min-h-screen bg-[#FAF3E3] text-[#4A2A17] font-sans antialiased selection:bg-[#FFC62B] selection:text-[#4A2A17]">
-        {children}
+        <ClientProviders>{children}</ClientProviders>
       </body>
     </html>
   );

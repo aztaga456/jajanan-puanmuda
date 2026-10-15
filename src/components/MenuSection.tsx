@@ -2,13 +2,15 @@
 
 import React, { useState, useMemo } from "react";
 import Image from "next/image";
-import { MENU_ITEMS, MenuItem } from "@/data/menuData";
+import { MenuItem } from "@/data/menuData";
 import { useCart } from "@/context/CartContext";
+import { useApp } from "@/context/AppContext";
 import { ProductModal } from "./ProductModal";
 import { Plus, Search, Filter, Sparkles, Check, Eye } from "lucide-react";
 
 export const MenuSection: React.FC = () => {
   const { addToCart } = useCart();
+  const { menuItems } = useApp();
   const [selectedCategory, setSelectedCategory] = useState<string>("semua");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<"default" | "low" | "high">("default");
@@ -26,7 +28,7 @@ export const MenuSection: React.FC = () => {
   ];
 
   const filteredItems = useMemo(() => {
-    return MENU_ITEMS.filter((item) => {
+    return menuItems.filter((item) => {
       const matchCategory =
         selectedCategory === "semua" || item.category === selectedCategory;
       const matchSearch =

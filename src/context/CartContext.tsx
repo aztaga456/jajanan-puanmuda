@@ -1,7 +1,8 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { MenuItem, DELIVERY_ZONES, DeliveryZone, BUSINESS_INFO } from "@/data/menuData";
+import { MenuItem, DeliveryZone } from "@/data/menuData";
+import { useApp } from "./AppContext";
 
 export interface CartItem {
   item: MenuItem;
@@ -34,19 +35,30 @@ interface CartContextType {
   isCartOpen: boolean;
   setIsCartOpen: (open: boolean) => void;
   generateWhatsAppLink: () => string;
+  recordCheckout: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { siteContent, deliveryZones, addOrder } = useApp();
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [selectedZone, setSelectedZone] = useState<DeliveryZone>(DELIVERY_ZONES[0]);
+  const [selectedZone, setSelectedZone] = useState<DeliveryZone>(deliveryZones[0]);
   const [orderMethod, setOrderMethod] = useState<"antar" | "ambil">("antar");
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
   const [deliveryAddress, setDeliveryAddress] = useState("");
   const [orderNotes, setOrderNotes] = useState("");
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+  // Keep selected zone synchronized with deliveryZones if zone is updated
+  useEffect(() => {
+    if (deliveryZones.length > 0) {
+      const match = deliveryZones.find((z) => z.id === selectedZone?.id);
+      if (match) setSelectedZone(match);
+      else setSelectedZone(deliveryZones[0]);
+    }
+  }, [deliveryZones]);
 
   // Load from local storage
   useEffect(() => {
@@ -107,16 +119,40 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const deliveryFee =
     orderMethod === "ambil"
       ? 0
-      : subtotal >= selectedZone.freeMinOrder && selectedZone.freeMinOrder > 0
+      : selectedZone && subtotal >= selectedZone.freeMinOrder && selectedZone.freeMinOrder > 0
       ? 0
-      : selectedZone.fee;
+      : selectedZone
+      ? selectedZone.fee
+      : 0;
 
   const total = subtotal + deliveryFee;
   const totalItems = cart.reduce((acc, ci) => acc + ci.quantity, 0);
 
+  // Record order into AppContext state for admin tracking
+  const recordCheckout = () => {
+    if (cart.length === 0) return;
+    addOrder({
+      customerName: customerName || "Pelanggan",
+      customerPhone: customerPhone || "-",
+      orderMethod,
+      deliveryAddress,
+      items: cart.map((ci) => ({
+        name: ci.item.name,
+        quantity: ci.quantity,
+        price: ci.item.price,
+        note: ci.note,
+      })),
+      subtotal,
+      deliveryFee,
+      total,
+      type: "reguler",
+    });
+  };
+
   // Generate automated formatted WhatsApp message matching PRD 8.4
   const generateWhatsAppLink = () => {
-    if (cart.length === 0) return BUSINESS_INFO.whatsappUrl;
+    const phoneRaw = siteContent.businessPhoneRaw || "6281928034054";
+    if (cart.length === 0) return `https://wa.me/${phoneRaw}`;
 
     let text = `Halo Jajanan Puanmuda, saya mau pesan:\n`;
     cart.forEach((ci, idx) => {
@@ -131,7 +167,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     text += `--------------------------------\n`;
     text += `Subtotal: Rp${subtotal.toLocaleString("id-ID")}\n`;
     if (orderMethod === "antar") {
-      text += `Ongkir (${selectedZone.name}): ${
+      text += `Ongkir (${selectedZone?.name || "Antar"}): ${
         deliveryFee === 0 ? "GRATIS ONGKIR" : `Rp${deliveryFee.toLocaleString("id-ID")}`
       }\n`;
     }
@@ -151,7 +187,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     text += `\nMohon dikonfirmasi ya kak, terima kasih! 🙏`;
 
-    return `https://wa.me/${BUSINESS_INFO.phoneRaw}?text=${encodeURIComponent(text)}`;
+    return `https://wa.me/${phoneRaw}?text=${encodeURIComponent(text)}`;
   };
 
   return (
@@ -181,6 +217,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         isCartOpen,
         setIsCartOpen,
         generateWhatsAppLink,
+        recordCheckout,
       }}
     >
       {children}
